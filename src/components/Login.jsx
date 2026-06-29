@@ -19,7 +19,6 @@ const Login = () => {
         },
         { withCredentials: true },
       );
-      console.log(response.data);
       dispatch(addUser(response.data));
     } catch (err) {
       console.error(err);
