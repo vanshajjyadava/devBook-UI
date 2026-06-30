@@ -8,6 +8,7 @@ import { BASE_URL } from "../utils/constants";
 const Login = () => {
   const [emailId, setEmailId] = useState("vanshyadav@gmail.com");
   const [password, setPassword] = useState("Vansh@139");
+  const [error, setError] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -25,7 +26,7 @@ const Login = () => {
       dispatch(addUser(response.data));
       return navigate("/feed");
     } catch (err) {
-      console.error(err);
+      setError(err?.response?.data || "Something went wrong");
     }
   };
 
@@ -58,7 +59,7 @@ const Login = () => {
             />
           </label>
           <div className="validator-hint hidden">Enter valid email address</div>
-          <label className="input validator">
+          <label className="input">
             <svg
               className="h-[1em] opacity-50"
               xmlns="http://www.w3.org/2000/svg"
@@ -79,19 +80,10 @@ const Login = () => {
               onChange={(e) => setPassword(e.target.value)}
               required
               placeholder="Password"
-              minLength="8"
-              pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-              title="Must be more than 8 characters, including number, lowercase letter, uppercase letter"
             />
           </label>
-          <p className="validator-hint hidden">
-            Must be more than 8 characters, including
-            <br />
-            At least one number <br />
-            At least one lowercase letter <br />
-            At least one uppercase letter
-          </p>
 
+          <p className="text-red-600">{error}</p>
           <div className="justify-end card-actions">
             <button className="btn btn-primary" onClick={handleLogin}>
               Login
