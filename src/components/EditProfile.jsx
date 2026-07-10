@@ -13,6 +13,7 @@ const EditProfile = ({ user }) => {
   const [about, setAbout] = useState(user.about || "");
   const [photoUrl, setPhotoUrl] = useState(user.photoUrl || "");
   const [skills, setSkills] = useState(user.skills || []);
+  const [skillInput, setSkillInput] = useState("");
   const [error, setError] = useState("");
   const [showToast, setShowToast] = useState(false);
   const dispatch = useDispatch();
@@ -127,7 +128,7 @@ const EditProfile = ({ user }) => {
 
               <div>
                 <p className="text-sm opacity-75 mb-1">Photo Url:</p>
-                <label className="input w-full mb-9">
+                <label className="input w-full mb-1">
                   <input
                     type="text"
                     value={photoUrl}
@@ -136,6 +137,88 @@ const EditProfile = ({ user }) => {
                   />
                 </label>
               </div>
+
+              <div>
+                <p className="text-sm opacity-75 mb-1">Skills:</p>
+
+                <div
+                  className="
+      flex
+      flex-wrap
+      items-center
+      gap-2
+      border
+      border-base-300
+      rounded-xl
+      px-3
+      py-2
+      min-h-[52px]
+      focus-within:border-primary
+      transition
+    ">
+                  {skills.map((skill, index) => (
+                    <div
+                      key={index}
+                      className="
+          flex
+          items-center
+          gap-2
+          bg-primary
+          text-primary-content
+          rounded-full
+          px-3
+          py-1
+          text-sm
+        ">
+                      <span>{skill}</span>
+
+                      <button
+                        type="button"
+                        className="font-bold hover:text-error"
+                        onClick={() =>
+                          setSkills(skills.filter((_, i) => i !== index))
+                        }>
+                        ✕
+                      </button>
+                    </div>
+                  ))}
+
+                  <input
+                    type="text"
+                    className="flex-1 min-w-[120px] bg-transparent outline-none"
+                    placeholder="Add a skill..."
+                    value={skillInput}
+                    onChange={(e) => setSkillInput(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" || e.key === ",") {
+                        e.preventDefault();
+
+                        const skill = skillInput.trim();
+
+                        if (
+                          skill &&
+                          !skills.some(
+                            (s) => s.toLowerCase() === skill.toLowerCase(),
+                          )
+                        ) {
+                          setSkills([...skills, skill]);
+                        }
+
+                        setSkillInput("");
+                      }
+
+                      if (
+                        e.key === "Backspace" &&
+                        skillInput === "" &&
+                        skills.length
+                      ) {
+                        setSkills(skills.slice(0, -1));
+                      }
+                    }}
+                  />
+                </div>
+              </div>
+
               <p className="text-red-600">{error}</p>
               <div className="justify-end card-actions">
                 <button className="btn btn-primary" onClick={saveProfile}>
