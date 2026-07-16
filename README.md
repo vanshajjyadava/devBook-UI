@@ -1,5 +1,4 @@
-# 🚀 DevBook
-
+# 📘 devBook
 A full-stack developer networking platform inspired by professional networking applications, built using the **MERN Stack**. DevBook enables developers to create profiles, discover other developers, send connection requests, and build meaningful professional connections in a secure and responsive environment.
 
 ---
