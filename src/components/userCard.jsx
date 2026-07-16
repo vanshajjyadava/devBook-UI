@@ -1,3 +1,5 @@
+import axios from "axios";
+import { BASE_URL } from "../utils/constants";
 import { useDispatch } from "react-redux";
 import { removeUserFromFeed } from "../utils/feedSlice";
 
