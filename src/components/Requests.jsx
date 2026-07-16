@@ -36,7 +36,9 @@ const Requests = () => {
     fetchRequests();
   }, []);
 
-  if (!requests || requests.length === 0)
+  if (!requests) return null;
+
+  if (requests.length === 0)
     return (
       <div className="flex flex-col items-center justify-center py-5">
         <h1 className="text-xl font-semibold opacity-70">
@@ -53,6 +55,7 @@ const Requests = () => {
 
       <div className="flex flex-col gap-5">
         {requests.map((request) => {
+          if (!request?.fromUserId) return null;
           const {
             _id,
             firstName,
